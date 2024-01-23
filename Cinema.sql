@@ -28,7 +28,7 @@ SELECT Genre.NomGenre, COUNT(Film.IdFilm) AS NombreFilms
 FROM Genre
 INNER JOIN Appartient ON Genre.IdGenre = Appartient.IdGenre
 INNER JOIN Film ON Appartient.IdFilm = Film.IdFilm
-GROUP BY Genre.NomGenre
+GROUP BY Genre.IdGenre
 ORDER BY NombreFilms DESC;
 
 e. Nombre de films par réalisateur (classés dans l’ordre décroissant)
@@ -41,17 +41,19 @@ ORDER BY NombreFilms DESC;
 
 f. Casting d’un film en particulier (id_film) : nom, prénom des acteurs + sexe
 
-SELECT Acteur.Nom, Acteur.Prenom, Acteur.Sexe
+SELECT Film.titre, Acteur.Nom, Acteur.Prenom, Acteur.Sexe
 FROM JoueDans
 INNER JOIN Acteur ON JoueDans.IdActeur = Acteur.IdActeur
+INNER JOIN Film ON JoueDans.id_film = Film.IdFilm
 WHERE JoueDans.IdFilm = 3;
 
 g. Films tournés par un acteur en particulier (id_acteur) avec leur rôle et l’année de
 sortie (du film le plus récent au plus ancien)
 
-SELECT Film.Titre, JoueDans.IdRole, Film.AnneeSortie
+SELECT Film.Titre, JoueDans.IdRole, Film.AnneeSortie, Acteur.Nom, Acteur.Prenom
 FROM JoueDans
 INNER JOIN Film ON JoueDans.IdFilm = Film.IdFilm
+INNER JOIN Acteur ON JoueDans.IdActeur = Acteur.idActeur
 WHERE JoueDans.IdActeur = 1
 ORDER BY Film.AnneeSortie DESC;
 
