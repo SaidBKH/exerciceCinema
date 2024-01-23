@@ -1,0 +1,58 @@
+CREATE TABLE Genre (
+   IdGenre INT NOT NULL AUTO_INCREMENT,
+   NomGenre VARCHAR(50) NOT NULL,
+   PRIMARY KEY(IdGenre)
+);
+
+CREATE TABLE Acteur (
+   IdActeur INT NOT NULL AUTO_INCREMENT,
+   Nom VARCHAR(50) NOT NULL,
+   Prenom VARCHAR(50),
+   Sexe VARCHAR(50) NOT NULL,
+   DateNaissance DATE NOT NULL,
+   PRIMARY KEY(IdActeur)
+);
+
+CREATE TABLE Role (
+   IdRole INT NOT NULL AUTO_INCREMENT,
+   NomPersonnage VARCHAR(50) NOT NULL,
+   PRIMARY KEY(IdRole)
+);
+
+CREATE TABLE Realisateur (
+   IdRealisateur INT NOT NULL AUTO_INCREMENT,
+   Nom VARCHAR(50) NOT NULL,
+   Prenom VARCHAR(50),
+   PRIMARY KEY(IdRealisateur)
+);
+
+CREATE TABLE Film (
+   IdFilm INT NOT NULL AUTO_INCREMENT,
+   Duree INT NOT NULL,
+   Synopsis TEXT NOT NULL,
+   Note INT,
+   Affiche VARCHAR(255),
+   Titre VARCHAR(50) NOT NULL,
+   AnneeSortie INT NOT NULL,
+   IdRealisateur INT NOT NULL,
+   PRIMARY KEY(IdFilm),
+   FOREIGN KEY(IdRealisateur) REFERENCES Realisateur(IdRealisateur)
+);
+
+CREATE TABLE Appartient (
+   IdFilm INT,
+   IdGenre INT,
+   PRIMARY KEY(IdFilm, IdGenre),
+   FOREIGN KEY(IdFilm) REFERENCES Film(IdFilm),
+   FOREIGN KEY(IdGenre) REFERENCES Genre(IdGenre)
+);
+
+CREATE TABLE JoueDans (
+   IdFilm INT,
+   IdActeur INT,
+   IdRole INT,
+   PRIMARY KEY(IdFilm, IdActeur, IdRole),
+   FOREIGN KEY(IdFilm) REFERENCES Film(IdFilm),
+   FOREIGN KEY(IdActeur) REFERENCES Acteur(IdActeur),
+   FOREIGN KEY(IdRole) REFERENCES Role(IdRole)
+);
